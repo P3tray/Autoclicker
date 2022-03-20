@@ -4,18 +4,18 @@ A neat little python3 autoclicker which is faster, more streamlined, and offers 
 
 Here's a totally non-biased comparison with my historical go-to solution for spamming M1.
 | Feature | (This) Autoclicker | OP Auto Clicker V3.0 |
-| ---- | ----------- |
-| Multiple keybinds | 🟢 | 🔴 |
-| Both keybind and hotkey support | 🟢 | 🔴 |
-| Persistant (saving) mouse settings | 🟢 | 🔴 |
-| Multiple user-creatable profiles |🟢 | 🔴 |
-| Mouse button hold-down intervals | 🟢 | 🔴 |
-| Randomised click intervals | 🟢 | 🔴 |
-| Mouse speeds so fast they break the sound barrier | 🟢 | 🔴 |
-| An open source license | 🟢 | 🔴 |
-| The ability to choose which button gets automatically clicked  | 🔴 | 🟢 |
-| An idiot proof way to rebind key(s)  | 🔴 | 🟢 |
-| A cool looking logo | 🟢 | 🔴 |
+| ----------------- | -- | -- |
+| Multiple keybinds | 🟢 | 🔴
+| Both keybind and hotkey support | 🟢 | 🔴
+| Persistant (saving) mouse settings | 🟢 | 🔴
+| Multiple user-creatable profiles |🟢 | 🔴
+| Mouse button hold-down intervals | 🟢 | 🔴
+| Randomised click intervals | 🟢 | 🔴
+| Mouse speeds so fast they break the sound barrier | 🟢 | 🔴
+| An open source license | 🟢 | 🔴
+| The ability to choose which button gets automatically clicked  | 🔴 | 🟢
+| An idiot proof way to rebind key(s)  | 🔴 | 🟢
+| A cool looking logo | 🟢 | 🔴
 
 ## Running from source
 To start the autoclicker run the shortcut if you're on windows, or run "main.pyw"
