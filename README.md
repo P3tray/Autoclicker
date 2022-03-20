@@ -8,6 +8,8 @@
 </p>
 
 ## About
+A more extensive readme and, well, program, is coming soon. This includes V1.0, standalone builds and releases, and better looking code.
+
 A neat little python3 autoclicker which is faster, more streamlined, and offers some the most wanted capabilities where competing products fail.
 
 Here's a totally non-biased comparison with my historical go-to solution for spamming M1.
