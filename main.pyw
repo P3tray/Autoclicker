@@ -1,5 +1,5 @@
 print("[INFO] Starting autoclicker.")
-version = "V1.0"
+version = "V0.1"
 
 ###########################
 ##  Importing libraries  ##

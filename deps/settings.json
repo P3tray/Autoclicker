@@ -1,0 +1,80 @@
+{
+  "Default": {
+    "ClickInterval": {
+      "SleepInterval": "20",
+      "Unit_SleepInterval": "Milliseconds",
+      "HoldInterval": "20",
+      "Unit_HoldInterval": "Milliseconds",
+      "HoldIntervalEnabled": true,
+      "RandomInterval": "20",
+      "Unit_RandomInterval": "Milliseconds",
+      "RandomIntervalEnabled": false
+    },
+    "toggle_autoclicker_on_press_key": {
+      "1": "q"
+    },
+    "toggle_autoclicker_on_hotkey": {},
+    "turn_off_autoclicker_on_press_key": {
+      "1": "#"
+    },
+    "turn_off_autoclicker_on_hotkey": {
+      "1": "alt+tab"
+    },
+    "toggle_open_autoclicker_on_press_key": {},
+    "toggle_open_autoclicker_on_hotkey": {
+      "1": "]"
+    }
+  },
+  "Payday 2": {
+    "ClickInterval": {
+      "SleepInterval": "20",
+      "Unit_SleepInterval": "Milliseconds",
+      "HoldInterval": "20",
+      "Unit_HoldInterval": "Milliseconds",
+      "HoldIntervalEnabled": true,
+      "RandomInterval": "20",
+      "Unit_RandomInterval": "Milliseconds",
+      "RandomIntervalEnabled": false
+    },
+    "toggle_autoclicker_on_press_key": {
+      "1": "q"
+    },
+    "toggle_autoclicker_on_hotkey": {},
+    "turn_off_autoclicker_on_press_key": {
+      "1": "#"
+    },
+    "turn_off_autoclicker_on_hotkey": {
+      "1": "alt+tab"
+    },
+    "toggle_open_autoclicker_on_press_key": {},
+    "toggle_open_autoclicker_on_hotkey": {
+      "1": "]"
+    }
+  },
+  "Fast": {
+    "ClickInterval": {
+      "SleepInterval": "0",
+      "Unit_SleepInterval": "Milliseconds",
+      "HoldInterval": "0",
+      "Unit_HoldInterval": "Milliseconds",
+      "HoldIntervalEnabled": false,
+      "RandomInterval": "0",
+      "Unit_RandomInterval": "Milliseconds",
+      "RandomIntervalEnabled": false
+    },
+    "toggle_autoclicker_on_press_key": {
+      "1": "Q"
+    },
+    "toggle_autoclicker_on_hotkey": {},
+    "turn_off_autoclicker_on_press_key": {
+      "1": "#"
+    },
+    "turn_off_autoclicker_on_hotkey": {
+      "1": "alt+tab"
+    },
+    "toggle_open_autoclicker_on_press_key": {},
+    "toggle_open_autoclicker_on_hotkey": {
+      "1": "]"
+    }
+  }
+}
