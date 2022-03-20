@@ -1,10 +1,13 @@
 # ![Project icon](/deps/icon.ico?raw=true "Project icon") Autoclicker
 <p align="center">
+  <a href="#about">About</a> •
   <a href="#running-from-source">Running from source</a> •
   <a href="#common-python-install-locations">Python install locations</a> •
   <a href="#configuration">Configuration</a> •
   <a href="#enjoy">Enjoy</a> •
 </p>
+
+## About
 A neat little python3 autoclicker which is faster, more streamlined, and offers some the most wanted capabilities where competing products fail.
 
 Here's a totally non-biased comparison with my historical go-to solution for spamming M1.
