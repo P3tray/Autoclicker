@@ -1,5 +1,5 @@
 # ![Project icon](/deps/icon.ico?raw=true "Project icon") Autoclicker
-<p align="center">
+<p align="left">
   <a href="#about">About</a> •
   <a href="#running-from-source">Running from source</a> •
   <a href="#common-python-install-locations">Python install locations</a> •
