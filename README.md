@@ -1,4 +1,5 @@
 # Autoclicker
+![Project icon](/deps/icon.ico?raw=true "Project icon")
 
 ## Running from source
 To start the autoclicker run the shortcut if you're on windows, or run "main.pyw"
