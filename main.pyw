@@ -236,7 +236,5 @@ def toggle_open_autoclicker():
 StatusBar.configure(text = 'Autoclicker [' + version + '] MIT ' + str(datetime.date.today().year))
 
 print("[INFO] Finished initializing autoclicker.")
-
 window.mainloop()
-
 print("[INFO] Window closed. Exiting autoclicker.")
