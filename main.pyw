@@ -1,5 +1,5 @@
 print("[INFO] Starting autoclicker.")
-version = "V0.1"
+version = "V0.2"
 
 ###########################
 ##  Importing libraries  ##
@@ -7,11 +7,11 @@ version = "V0.1"
 
 from typing import Literal
 import deps.keyboard as keyboard
+import deps.mouse as mouse
 import deps.profilemenu as profilemenu
 import time
 import datetime
 import tkinter as tk
-import ctypes
 import json
 import random
 from threading import Thread
@@ -42,9 +42,11 @@ window.title('Autoclicker')
 
 window.resizable(0, 0)
 window.style = ttk.Style(window)
-window.style.theme_use("vista")
-window.iconbitmap("./deps/icon.ico")
-
+try:
+    window.iconbitmap("./deps/icon.ico") 
+    window.style.theme_use("vista")
+except:
+    pass
 ################################
 ##  Status bar at the bottom  ##
 ################################
@@ -208,9 +210,9 @@ def autoclicker():
     print("--------------------------------------------------------")
     StatusBar.configure(text = "Status: Autoclicker " + ((run_autoclicker and "ON!") or "OFF!"))
     while run_autoclicker:
-        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        mouse.press(button='left')
         time.sleep(time_to_hold)
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
+        mouse.release(button='left')
         time.sleep(time_to_sleep)
         time.sleep(random.uniform(0,time_to_randomize))
     StatusBar.configure(text = "Status: Autoclicker OFF!")

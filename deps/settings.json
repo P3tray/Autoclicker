@@ -8,7 +8,7 @@
       "HoldIntervalEnabled": true,
       "RandomInterval": "20",
       "Unit_RandomInterval": "Milliseconds",
-      "RandomIntervalEnabled": false
+      "RandomIntervalEnabled": true
     },
     "toggle_autoclicker_on_press_key": {
       "1": "q"
@@ -25,7 +25,7 @@
       "1": "]"
     }
   },
-  "Payday 2": {
+  "Example": {
     "ClickInterval": {
       "SleepInterval": "20",
       "Unit_SleepInterval": "Milliseconds",
