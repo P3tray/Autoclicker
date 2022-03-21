@@ -15,12 +15,16 @@ A neat little python3 autoclicker which is faster, more streamlined, and offers 
 Here's a totally non-biased comparison with my historical go-to solution for spamming M1.
 | Feature | (This) Autoclicker | OP Auto Clicker V3.0 |
 | ----------------- | -- | -- |
-| Multiple keybinds | 🟢 | 🔴
-| Both keybind and hotkey support | 🟢 | 🔴
-| Persistant (saving) mouse settings | 🟢 | 🔴
-| Multiple user-creatable profiles |🟢 | 🔴
+| Click intervals | 🟢 | 🟢
 | Mouse button hold-down intervals | 🟢 | 🔴
 | Randomised click intervals | 🟢 | 🔴
+| The ability to choose which key is pressed | 🔴 | 🟢
+| Multiple keybinds | 🟢 | 🔴
+| Toggle and force-stop keysbinds and hotkeys | 🟢 | 🔴
+| Both keybind and hotkey support | 🟢 | 🔴
+| Persistant (saving) keybinds | 🟢 | 🟢
+| Persistant (saving) mouse settings | 🟢 | 🔴
+| Multiple user-creatable profiles |🟢 | 🔴
 | Mouse speeds so fast they break the sound barrier | 🟢 | 🔴
 | An open source license | 🟢 | 🔴
 | The ability to choose which button gets automatically clicked  | 🔴 | 🟢
