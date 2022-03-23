@@ -1,12 +1,12 @@
 {
   "Default": {
     "ClickInterval": {
-      "SleepInterval": "20",
+      "SleepInterval": "520",
       "Unit_SleepInterval": "Milliseconds",
-      "HoldInterval": "20",
+      "HoldInterval": "420",
       "Unit_HoldInterval": "Milliseconds",
       "HoldIntervalEnabled": true,
-      "RandomInterval": "20",
+      "RandomInterval": "320",
       "Unit_RandomInterval": "Milliseconds",
       "RandomIntervalEnabled": true
     },

@@ -102,6 +102,28 @@ def UnitsToMath(string):
 
 def LoadSettings(newProfile):
     global settings
+    if newProfile  == "New profile...":
+        ProfileCreation = tk.Toplevel(window)
+        ProfileCreation.title('New Profile Creation')
+        ProfileCreation.resizable(0, 0)
+        ProfileCreation.style = ttk.Style(window)
+        ProfileCreation.style.theme_use("vista")
+        ProfileCreation.iconbitmap("./deps/icon.ico")
+
+        Title_ProfileCreation = ttk.Label(ProfileCreation, text = 'Please input a name for the new profile:')
+        Title_ProfileCreation.grid(row = 1, column = 1, columnspan = 2, padx = 5, pady = 5)
+        Item_ProfileCreation = ttk.Entry(ProfileCreation, textvariable = Profile)
+        Item_ProfileCreation.grid(row = 2, column = 1, columnspan = 2, padx = 5, pady = 5)
+        def save():
+            SaveSettings()
+            LoadSettings(Profile.get())
+            Item_Profile = ttk.OptionMenu(window, Profile, Profile.get(), *list(settingsJson), "New profile...", command = LoadSettings)
+        def cancel():
+            ProfileCreation.destroy()
+        ProfileCreation_Cancel = ttk.Button(ProfileCreation, text = "Cancel", command = cancel)
+        ProfileCreation_Cancel.grid(row = 3, column = 1, padx = 5, pady = 5, sticky = "e")
+        ProfileCreation_Save = ttk.Button(ProfileCreation, text = "Save", command = save, takefocus = True)
+        ProfileCreation_Save.grid(row = 3, column = 2, padx = 5, pady = 5, sticky = "w")
     profilemenu.createMenu(newProfile, list(settingsJson))
     settings = settingsJson[newProfile]
     SleepInterval.set(settings["ClickInterval"].get("SleepInterval", "0"))
