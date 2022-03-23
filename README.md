@@ -1,5 +1,5 @@
 # ![Project icon](/deps/logo_text.png?raw=true "Project icon")
-<p align="left">
+<p align="centre">
   <a href="#about">About</a> •
   <a href="#running-from-source">Running from source</a> •
   <a href="#common-python-install-locations">Python install locations</a> •
