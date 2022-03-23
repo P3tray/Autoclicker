@@ -1,4 +1,4 @@
-# ![Project icon](/deps/icon.ico?raw=true "Project icon") Autoclicker
+# ![Project icon](/deps/logo_text.png?raw=true "Project icon")
 <p align="left">
   <a href="#about">About</a> •
   <a href="#running-from-source">Running from source</a> •
