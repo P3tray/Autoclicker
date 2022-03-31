@@ -1,11 +1,12 @@
 print("[INFO] Starting autoclicker.")
-version = "V0.2"
+version = "V0.4"
 
 ###########################
 ##  Importing libraries  ##
 ###########################
 
 from typing import Literal
+from wsgiref import validate
 import deps.keyboard as keyboard
 import deps.mouse as mouse
 import deps.profilemenu as profilemenu
@@ -51,9 +52,9 @@ except:
 ##  Status bar at the bottom  ##
 ################################
 
-StatusBar = ttk.Label(window, text = 'Autoclicker [' + version + '] MIT ' + str(datetime.date.today().year), relief = "flat")
-##StatusBar.config(bg = "gray51", fg = "white")
-StatusBar.grid(row = 5, column = 1, columnspan = 2, padx = 10, pady = 5, ipadx = 10, ipady = 5, sticky = "w")
+StatusBar = ttk.Label(window, text = '  Autoclicker [' + version + '] MIT ' + str(datetime.date.today().year), relief = "flat")
+##StatusBar.config(background = "gray51", foreground = "white")
+StatusBar.grid(row = 6, column = 1, columnspan = 20, padx = 0, pady = 0, ipadx = 10, ipady = 2, sticky = "w")
 
 #################################
 ##  Variables used by tkinter  ##
@@ -71,16 +72,20 @@ RandomIntervalEnabled = tk.BooleanVar()
 
 
 ######################################
-##  Load settings.json and profile  ##
+##  Load Settings.json and profile  ##
 ######################################
 
-settingsJson = json.load(open("./deps/settings.json", "r"))
-Profile.set(list(settingsJson)[0])
-settings = settingsJson[Profile.get()]
+SettingsJSON = json.load(open("./deps/Settings.json", "r"))
+Profile.set(list(SettingsJSON["Profiles"])[0])
+Profiles = SettingsJSON["Profiles"][Profile.get()]
+Settings = SettingsJSON["Settings"]
 
 ####################################
 ##  Functions used by the window  ##
 ####################################
+
+if Settings["Status Bar"] == False:
+    StatusBar.grid_forget()
 
 def UnitsToMath(string):
     ## Yes, I know I can use a table, no, I can't be bothered to.
@@ -100,8 +105,13 @@ def UnitsToMath(string):
     elif string == "Weeks":
         return 604800
 
-def LoadSettings(newProfile):
-    global settings
+def IsInterger(value):
+    return value.isdigit()
+
+IsInterger = window.register(IsInterger)
+
+def LoadProfiles(newProfile):
+    global Profiles
     if newProfile  == "New profile...":
         ProfileCreation = tk.Toplevel(window)
         ProfileCreation.title('New Profile Creation')
@@ -112,75 +122,113 @@ def LoadSettings(newProfile):
 
         Title_ProfileCreation = ttk.Label(ProfileCreation, text = 'Please input a name for the new profile:')
         Title_ProfileCreation.grid(row = 1, column = 1, columnspan = 2, padx = 5, pady = 5)
-        Item_ProfileCreation = ttk.Entry(ProfileCreation, textvariable = Profile)
-        Item_ProfileCreation.grid(row = 2, column = 1, columnspan = 2, padx = 5, pady = 5)
+        Item_ProfileCreation = ttk.Entry(ProfileCreation, textvariable = Profile, width=34)
+        Item_ProfileCreation.grid(row = 2, column = 1, columnspan = 2, padx = 5, pady = 0)
         def save():
-            SaveSettings()
-            LoadSettings(Profile.get())
-            Item_Profile = ttk.OptionMenu(window, Profile, Profile.get(), *list(settingsJson), "New profile...", command = LoadSettings)
+            SaveProfiles()
+            LoadProfiles(Profile.get())
+            Item_Profile = ttk.OptionMenu(window, Profile, Profile.get(), *list(SettingsJSON["Profiles"]), "New profile...", command = LoadProfiles)
         def cancel():
             ProfileCreation.destroy()
         ProfileCreation_Cancel = ttk.Button(ProfileCreation, text = "Cancel", command = cancel)
-        ProfileCreation_Cancel.grid(row = 3, column = 1, padx = 5, pady = 5, sticky = "e")
+        ProfileCreation_Cancel.grid(row = 3, column = 1, padx = 5, pady = 5, sticky = "w")
         ProfileCreation_Save = ttk.Button(ProfileCreation, text = "Save", command = save, takefocus = True)
-        ProfileCreation_Save.grid(row = 3, column = 2, padx = 5, pady = 5, sticky = "w")
-    profilemenu.createMenu(newProfile, list(settingsJson))
-    settings = settingsJson[newProfile]
-    SleepInterval.set(settings["ClickInterval"].get("SleepInterval", "0"))
-    Unit_SleepInterval.set(settings["ClickInterval"].get("Unit_SleepInterval", "Milliseconds"))
-    HoldInterval.set(settings["ClickInterval"].get("HoldInterval", "0"))
-    Unit_HoldInterval.set(settings["ClickInterval"].get("Unit_HoldInterval", "Milliseconds"))
-    HoldIntervalEnabled.set(settings["ClickInterval"].get("HoldIntervalEnabled", False))
-    RandomInterval.set(settings["ClickInterval"].get("RandomInterval", "0"))
-    Unit_RandomInterval.set(settings["ClickInterval"].get("Unit_RandomInterval", "Milliseconds"))
-    RandomIntervalEnabled.set(settings["ClickInterval"].get("RandomIntervalEnabled", False))
+        ProfileCreation_Save.grid(row = 3, column = 2, padx = 5, pady = 5, sticky = "e")
+    profilemenu.createMenu(newProfile, list(SettingsJSON["Profiles"]))
+    Profiles = SettingsJSON["Profiles"][newProfile]
+    SleepInterval.set(Profiles["ClickInterval"].get("SleepInterval", "0"))
+    Unit_SleepInterval.set(Profiles["ClickInterval"].get("Unit_SleepInterval", "Milliseconds"))
+    HoldInterval.set(Profiles["ClickInterval"].get("HoldInterval", "0"))
+    Unit_HoldInterval.set(Profiles["ClickInterval"].get("Unit_HoldInterval", "Milliseconds"))
+    HoldIntervalEnabled.set(Profiles["ClickInterval"].get("HoldIntervalEnabled", False))
+    RandomInterval.set(Profiles["ClickInterval"].get("RandomInterval", "0"))
+    Unit_RandomInterval.set(Profiles["ClickInterval"].get("Unit_RandomInterval", "Milliseconds"))
+    RandomIntervalEnabled.set(Profiles["ClickInterval"].get("RandomIntervalEnabled", False))
 
     keyboard.unhook_all() ## This method is the best I've ever seen.
 
-    for i,v in settings["toggle_autoclicker_on_press_key"].items():
+    for i, v in Profiles["toggle_autoclicker_on_press_key"].items():
         keyboard.on_press_key(v, lambda key: toggle_autoclicker())
-    for i,v in settings["toggle_autoclicker_on_hotkey"].items():
+    for i, v in Profiles["toggle_autoclicker_on_hotkey"].items():
         keyboard.add_hotkey(v, lambda: toggle_autoclicker())
-    for i,v in settings["turn_off_autoclicker_on_press_key"].items(): 
+    for i, v in Profiles["turn_off_autoclicker_on_press_key"].items(): 
         keyboard.on_press_key(v, lambda key: turn_off_autoclicker())
-    for i,v in settings["turn_off_autoclicker_on_hotkey"].items(): 
+    for i, v in Profiles["turn_off_autoclicker_on_hotkey"].items(): 
         keyboard.add_hotkey(v, lambda: turn_off_autoclicker())
-    for i,v in settings["toggle_open_autoclicker_on_press_key"].items():
+    for i, v in Profiles["toggle_open_autoclicker_on_press_key"].items():
         keyboard.on_press_key(v, lambda key: window.quit())
-    for i,v in settings["toggle_open_autoclicker_on_hotkey"].items():
+    for i, v in Profiles["toggle_open_autoclicker_on_hotkey"].items():
         keyboard.add_hotkey(v, lambda: window.quit())
 
-    StatusBar.configure(text = "Loaded " + Profile.get())
+    StatusBar.configure(text = "  Loaded " + Profile.get())
 
-def SaveSettings():
-    global settings
-    settings["ClickInterval"]["SleepInterval"] = SleepInterval.get()
-    settings["ClickInterval"]["Unit_SleepInterval"] = Unit_SleepInterval.get()
-    settings["ClickInterval"]["HoldInterval"] = HoldInterval.get()
-    settings["ClickInterval"]["Unit_HoldInterval"] = Unit_HoldInterval.get()
-    settings["ClickInterval"]["HoldIntervalEnabled"] = HoldIntervalEnabled.get()
-    settings["ClickInterval"]["RandomInterval"] = RandomInterval.get()
-    settings["ClickInterval"]["Unit_RandomInterval"] = Unit_RandomInterval.get()
-    settings["ClickInterval"]["RandomIntervalEnabled"] = RandomIntervalEnabled.get()
-    settingsJson[Profile.get()] = settings
-    json.dump(settingsJson, open("./deps/settings.json", "w+"), indent = 2, separators = (',', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
-    StatusBar.configure(text = "Saved " + Profile.get())
+def SaveProfiles():
+    global Profiles
+    Profiles["ClickInterval"]["SleepInterval"] = SleepInterval.get()
+    Profiles["ClickInterval"]["Unit_SleepInterval"] = Unit_SleepInterval.get()
+    Profiles["ClickInterval"]["HoldInterval"] = HoldInterval.get()
+    Profiles["ClickInterval"]["Unit_HoldInterval"] = Unit_HoldInterval.get()
+    Profiles["ClickInterval"]["HoldIntervalEnabled"] = HoldIntervalEnabled.get()
+    Profiles["ClickInterval"]["RandomInterval"] = RandomInterval.get()
+    Profiles["ClickInterval"]["Unit_RandomInterval"] = Unit_RandomInterval.get()
+    Profiles["ClickInterval"]["RandomIntervalEnabled"] = RandomIntervalEnabled.get()
+    SettingsJSON["Profiles"][Profile.get()] = Profiles
+    json.dump(SettingsJSON, open("./deps/Settings.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
+    StatusBar.configure(text = "  Saved " + Profile.get())
 
-profilemenu = profilemenu.Menu(window, tk, ttk, LoadSettings)
-LoadSettings(Profile.get())
+def LoadSettings():
+    SettingsWindow = tk.Toplevel(window)
+    SettingsWindow.title('Settings')
+    SettingsWindow.resizable(0, 0)
+    SettingsWindow.style = ttk.Style(window)
+    SettingsWindow.style.theme_use("vista")
+    SettingsWindow.iconbitmap("./deps/icon.ico")
+
+    Title_SettingsWindow = ttk.Label(SettingsWindow, text = 'Available settings:')
+    Title_SettingsWindow.grid(row = 1, column = 1, columnspan = 2, padx = 5, pady = 5, sticky="w")
+
+    TempSettings = {}
+
+    i = 1
+    for v in list(SettingsJSON["Settings"]):
+        i = i + 1
+        VarType = type(SettingsJSON["Settings"][v])
+        if VarType == bool:
+            TempSettings[v] = tk.BooleanVar()
+            TempSettings[v].set(SettingsJSON["Settings"][v])
+            Title_CheckButton = ttk.Label(SettingsWindow, text = "Enable " + v + "?")
+            Title_CheckButton.grid(row = i, column = 1, padx = 5, pady = 0)
+            CheckButton = ttk.Checkbutton(SettingsWindow, variable = TempSettings[v]) ##, onvalue = True, offvalue = False
+            CheckButton.grid(row = i, column = 2, padx = 5, pady = 0)
+    def save():
+        for v in list(TempSettings):
+            SettingsJSON["Settings"][v] = TempSettings[v].get()
+        json.dump(SettingsJSON, open("./deps/Settings.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
+        StatusBar.configure(text = "  Saved settings")
+    def cancel():
+        SettingsWindow.destroy()
+    SettingsWindow_Cancel = ttk.Button(SettingsWindow, text = "Cancel", command = cancel)
+    SettingsWindow_Cancel.grid(row = 100, column = 1, padx = 5, pady = 5, sticky = "w")
+    SettingsWindow_Save = ttk.Button(SettingsWindow, text = "Save", command = save, takefocus = True)
+    SettingsWindow_Save.grid(row = 100, column = 2, padx = 5, pady = 5, sticky = "e")
+
+profilemenu = profilemenu.Menu(window, tk, ttk, LoadProfiles)
+LoadProfiles(Profile.get())
 
 ###############################
 ##  Click Intervals (ROW 1)  ##
 ###############################
-Frame_ClickIntervals = ttk.LabelFrame(window, text = "Click speed settings")
-Frame_ClickIntervals.grid(row = 2, column = 1, columnspan = 2, padx = 10, pady = 5)
+Frame_ClickIntervals = ttk.LabelFrame(window, text = "Click speed Profiles")
+Frame_ClickIntervals.grid(row = 2, column = 1, columnspan = 2, padx = 10, pady = (5, 8))
 
 ## SleepInterval
+def isint():
+    return isinstance(SleepInterval.get(), int)
 Title_SleepInterval = ttk.Label(Frame_ClickIntervals, text = 'Click interval ')
 Title_SleepInterval.grid(row = 1, column = 1)
-Item_SleepInterval = ttk.Entry(Frame_ClickIntervals, width = 4, textvariable = SleepInterval)
+Item_SleepInterval = ttk.Entry(Frame_ClickIntervals, width = 6, textvariable = SleepInterval, validate="key", validatecommand=(IsInterger, "%S"))
 Item_SleepInterval.grid(row = 1, column = 2)
-Item_Unit_SleepInterval = ttk.OptionMenu(Frame_ClickIntervals, Unit_SleepInterval,"Milliseconds","Milliseconds","Seconds","Minutes","Hours")
+Item_Unit_SleepInterval = ttk.OptionMenu(Frame_ClickIntervals, Unit_SleepInterval, Unit_SleepInterval.get(), "Milliseconds", "Seconds", "Minutes", "Hours")
 Item_Unit_SleepInterval.grid(row = 1, column = 3)
 Item_SleepIntervalEnabled = ttk.Checkbutton(Frame_ClickIntervals, state = 'disabled', onvalue = True) ##, onvalue = True, offvalue = False
 Item_SleepIntervalEnabled.grid(row = 1, column = 4)
@@ -188,20 +236,20 @@ Item_SleepIntervalEnabled.grid(row = 1, column = 4)
 ## HoldInterval
 Title_HoldInterval = ttk.Label(Frame_ClickIntervals, text = 'Hold interval ')
 Title_HoldInterval.grid(row = 2, column = 1)
-Item_HoldInterval = ttk.Entry(Frame_ClickIntervals, width = 4, textvariable = HoldInterval)
+Item_HoldInterval = ttk.Entry(Frame_ClickIntervals, width = 6, textvariable = HoldInterval, validate="key", validatecommand=(IsInterger, "%S"))
 Item_HoldInterval.grid(row = 2, column = 2)
-Item_Unit_HoldInterval = ttk.OptionMenu(Frame_ClickIntervals, Unit_HoldInterval,Unit_HoldInterval.get(),"Milliseconds","Seconds","Minutes","Hours")
+Item_Unit_HoldInterval = ttk.OptionMenu(Frame_ClickIntervals, Unit_HoldInterval, Unit_HoldInterval.get(), "Milliseconds", "Seconds", "Minutes", "Hours")
 Item_Unit_HoldInterval.grid(row = 2, column = 3)
 Item_HoldIntervalEnabled = ttk.Checkbutton(Frame_ClickIntervals, variable = HoldIntervalEnabled) ##, onvalue = True, offvalue = False
 Item_HoldIntervalEnabled.grid(row = 2, column = 4)
 
 ## RandomInterval
 Title_RandomInterval = ttk.Label(Frame_ClickIntervals, text = 'Random interval ')
-Title_RandomInterval.grid(row = 3, column = 1, pady = (0,5))
-Item_RandomInterval = ttk.Entry(Frame_ClickIntervals, width = 4, textvariable = RandomInterval)
-Item_RandomInterval.grid(row = 3, column = 2, pady = (0,5))
-Item_Unit_RandomInterval = ttk.OptionMenu(Frame_ClickIntervals, Unit_RandomInterval,Unit_RandomInterval.get(),"Milliseconds","Seconds","Minutes","Hours")
-Item_Unit_RandomInterval.grid(row = 3, column = 3, pady = (0,5))
+Title_RandomInterval.grid(row = 3, column = 1, pady = (0, 5))
+Item_RandomInterval = ttk.Entry(Frame_ClickIntervals, width = 6, textvariable = RandomInterval, validate="key", validatecommand=(IsInterger, "%S"))
+Item_RandomInterval.grid(row = 3, column = 2, pady = (0, 5))
+Item_Unit_RandomInterval = ttk.OptionMenu(Frame_ClickIntervals, Unit_RandomInterval, Unit_RandomInterval.get(), "Milliseconds", "Seconds", "Minutes", "Hours")
+Item_Unit_RandomInterval.grid(row = 3, column = 3, pady = (0, 5))
 Item_RandomIntervalEnabled = ttk.Checkbutton(Frame_ClickIntervals, variable = RandomIntervalEnabled) ##, onvalue = True, offvalue = False
 Item_RandomIntervalEnabled.grid(row = 3, column = 4)
 
@@ -213,31 +261,32 @@ Item_RandomIntervalEnabled.grid(row = 3, column = 4)
 ##testframe = ttk.LabelFrame(window, text = "Click options")
 ##testframe.grid(row = 3, column = 1, padx = 10, pady = 5, sticky = "w")
 
-################################
-##  Save button (bottom row)  ##
-################################
-SaveButton = ttk.Button(window, text = "Save", command = SaveSettings)
-SaveButton.grid(row = 5, column = 2, padx = 10, pady = 5, sticky = "e")
+###################################################
+##  Advanced options & Save button (bottom row)  ##
+###################################################
+SaveButton = ttk.Button(window, text = "Save", command = SaveProfiles)
+SaveButton.grid(row = 1, column = 2, padx = 10, pady = (10, 0), sticky = "e")
+SettingsButton = ttk.Button(window, text = "Settings", command = LoadSettings)
+SettingsButton.grid(row = 1, column = 1, padx = 10, pady = (10, 0),  sticky = "w")
 
 def autoclicker():
-    time_to_sleep = int(''.join(x for x in SleepInterval.get() if x.isdigit())) * UnitsToMath(Unit_SleepInterval.get())
-    time_to_hold = (HoldIntervalEnabled.get() and int(''.join(x for x in HoldInterval.get() if x.isdigit())) * UnitsToMath(Unit_HoldInterval.get())) or 0
-    time_to_randomize = (RandomIntervalEnabled.get() and int(''.join(x for x in RandomInterval.get() if x.isdigit())) * UnitsToMath(Unit_RandomInterval.get())) or 0
-    print(time_to_randomize)
+    time_to_sleep = int(SleepInterval.get()) * UnitsToMath(Unit_SleepInterval.get()) or 0
+    time_to_hold = (HoldIntervalEnabled.get() and int(HoldInterval.get()) * UnitsToMath(Unit_HoldInterval.get())) or 0
+    time_to_randomize = (RandomIntervalEnabled.get() and int(RandomInterval.get()) * UnitsToMath(Unit_RandomInterval.get())) or 0
     print("--------------------------------------------------------")
     print("-[INFO] Time to sleep: ", time_to_sleep)
     print("-[INFO] Time to hold: ", time_to_hold)
     print("-[INFO] Will hold?: ", HoldIntervalEnabled.get())
     print("-[INFO] Autoclicker configured to run?: ", run_autoclicker)
     print("--------------------------------------------------------")
-    StatusBar.configure(text = "Status: Autoclicker " + ((run_autoclicker and "ON!") or "OFF!"))
+    StatusBar.configure(text = "  Status: Autoclicker " + ((run_autoclicker and "ON!") or "OFF!"))
     while run_autoclicker:
         mouse.press(button='left')
         time.sleep(time_to_hold)
         mouse.release(button='left')
         time.sleep(time_to_sleep)
-        time.sleep(random.uniform(0,time_to_randomize))
-    StatusBar.configure(text = "Status: Autoclicker OFF!")
+        time.sleep(random.uniform(0, time_to_randomize))
+    StatusBar.configure(text = "  Status: Autoclicker OFF!                                                                                ")
 
 def toggle_autoclicker():
     global run_autoclicker
@@ -255,7 +304,7 @@ def toggle_open_autoclicker():
     print("[WARN] Autoclicker quitting via toggle_open_autoclicker")
     window.quit()
 
-StatusBar.configure(text = 'Autoclicker [' + version + '] MIT ' + str(datetime.date.today().year))
+StatusBar.configure(text = '  Autoclicker [' + version + '] MIT ' + str(datetime.date.today().year))
 
 print("[INFO] Finished initializing autoclicker.")
 window.mainloop()

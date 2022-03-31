@@ -12,4 +12,4 @@ class Menu:
         else:
             print("Not Destroyed")
         self.ProfilesMenu = self.ttk.OptionMenu(self.window, self.selected_profile, currentProfile, *availableProfiles, "New profile...", command = self.callback)
-        self.ProfilesMenu.grid(row = 1, column = 1, columnspan = 2, pady = (0,0))
+        self.ProfilesMenu.grid(row = 1, column = 1, columnspan = 2, padx = 5, pady = (10,0))
