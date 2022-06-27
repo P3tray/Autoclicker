@@ -80,9 +80,17 @@ Profile.set(list(SettingsJSON["Profiles"])[0])
 Profiles = SettingsJSON["Profiles"][Profile.get()]
 Settings = SettingsJSON["Settings"]
 
-####################################
-##  Functions used by the window  ##
-####################################
+                    ####################################
+                    ##  Functions used by the window  ##
+                    ####################################
+
+toggle_autoclicker_on_press_key = {}
+
+###############################################
+##  Keybind confirguration (ROW 2 COLUMN 1)  ##
+###############################################
+Frame_KeybindConfirguration = ttk.LabelFrame(window, text = "Keybinds")
+Frame_KeybindConfirguration.grid(row = 3, column = 1, columnspan = 2, padx = 10, pady = (5, 8))
 
 if Settings["Status Bar"] == False:
     StatusBar.grid_forget()
@@ -146,9 +154,16 @@ def LoadProfiles(newProfile):
     RandomIntervalEnabled.set(Profiles["ClickInterval"].get("RandomIntervalEnabled", False))
 
     keyboard.unhook_all() ## This method is the best I've ever seen.
+    for v in Frame_KeybindConfirguration.winfo_children():
+        v.destroy()
 
     for i, v in Profiles["toggle_autoclicker_on_press_key"].items():
+        toggle_autoclicker_on_press_key[i] = v
+        entry = ttk.Entry(Frame_KeybindConfirguration, width = 6)
+        entry.insert(0, v)
+        entry.grid(row = i, column = 1, columnspan=2)
         keyboard.on_press_key(v, lambda key: toggle_autoclicker())
+
     for i, v in Profiles["toggle_autoclicker_on_hotkey"].items():
         keyboard.add_hotkey(v, lambda: toggle_autoclicker())
     for i, v in Profiles["turn_off_autoclicker_on_press_key"].items(): 
@@ -218,12 +233,9 @@ LoadProfiles(Profile.get())
 ###############################
 ##  Click Intervals (ROW 1)  ##
 ###############################
-Frame_ClickIntervals = ttk.LabelFrame(window, text = "Click speed Profiles")
+Frame_ClickIntervals = ttk.LabelFrame(window, text = "Click speed")
 Frame_ClickIntervals.grid(row = 2, column = 1, columnspan = 2, padx = 10, pady = (5, 8))
 
-## SleepInterval
-def isint():
-    return isinstance(SleepInterval.get(), int)
 Title_SleepInterval = ttk.Label(Frame_ClickIntervals, text = 'Click interval ')
 Title_SleepInterval.grid(row = 1, column = 1)
 Item_SleepInterval = ttk.Entry(Frame_ClickIntervals, width = 6, textvariable = SleepInterval, validate="key", validatecommand=(IsInterger, "%S"))
@@ -253,13 +265,13 @@ Item_Unit_RandomInterval.grid(row = 3, column = 3, pady = (0, 5))
 Item_RandomIntervalEnabled = ttk.Checkbutton(Frame_ClickIntervals, variable = RandomIntervalEnabled) ##, onvalue = True, offvalue = False
 Item_RandomIntervalEnabled.grid(row = 3, column = 4)
 
+def LoadKeybinds():
+    pass
 
 
-######################################
-##  Click Options (ROW 2 COLUMN 1)  ##
-######################################
-##testframe = ttk.LabelFrame(window, text = "Click options")
-##testframe.grid(row = 3, column = 1, padx = 10, pady = 5, sticky = "w")
+Title_test = ttk.Label(Frame_KeybindConfirguration, text = 'test')
+Title_test.grid(row = 20, column = 1)
+
 
 ###################################################
 ##  Advanced options & Save button (bottom row)  ##
@@ -286,7 +298,7 @@ def autoclicker():
         mouse.release(button='left')
         time.sleep(time_to_sleep)
         time.sleep(random.uniform(0, time_to_randomize))
-    StatusBar.configure(text = "  Status: Autoclicker OFF!                                                                                ")
+    StatusBar.configure(text = "  Status: Autoclicker OFF! ")
 
 def toggle_autoclicker():
     global run_autoclicker
