@@ -4,7 +4,7 @@
   <a href="#running-from-source">Running from source</a> •
   <a href="#common-python-install-locations">Python install locations</a> •
   <a href="#configuration">Configuration</a> •
-  <a href="#enjoy">Enjoy</a> •
+  <a href="#enjoy">Enjoy</a>
 </p>
 
 ## About
