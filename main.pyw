@@ -7,9 +7,11 @@ version = "V0.4"
 
 from typing import Literal
 from wsgiref import validate
-import deps.keyboard as keyboard
-import deps.mouse as mouse
-import deps.profilemenu as profilemenu
+import autoclicker
+import autoclicker.keyboard as keyboard
+import autoclicker.mouse as mouse
+import autoclicker.profilemenu as profilemenu
+from autoclicker.ttkwidgets import DebugWindow
 import time
 import datetime
 import tkinter as tk
@@ -17,7 +19,6 @@ import json
 import random
 from threading import Thread
 from tkinter import ttk
-from deps.ttkwidgets import DebugWindow
 
 
 
@@ -46,7 +47,7 @@ window.title('Autoclicker')
 window.resizable(0, 0)
 window.style = ttk.Style(window)
 try:
-    window.iconbitmap("./deps/icon.ico") 
+    window.iconbitmap("./autoclicker/icon.ico") 
     window.style.theme_use("vista")
 except:
     pass
@@ -76,7 +77,7 @@ RandomIntervalEnabled = tk.BooleanVar()
 ##  Load Settings.json and profile  ##
 ######################################
 
-SettingsJSON = json.load(open("./deps/Settings.json", "r"))
+SettingsJSON = json.load(open("./autoclicker/Settings.json", "r"))
 Profile.set(list(SettingsJSON["Profiles"])[0])
 Profiles = SettingsJSON["Profiles"][Profile.get()]
 Settings = SettingsJSON["Settings"]
@@ -128,7 +129,7 @@ def LoadProfiles(newProfile):
         ProfileCreation.resizable(0, 0)
         ProfileCreation.style = ttk.Style(window)
         ProfileCreation.style.theme_use("vista")
-        ProfileCreation.iconbitmap("./deps/icon.ico")
+        ProfileCreation.iconbitmap("./autoclicker/icon.ico")
 
         Title_ProfileCreation = ttk.Label(ProfileCreation, text = 'Please input a name for the new profile:')
         Title_ProfileCreation.grid(row = 1, column = 1, columnspan = 2, padx = 5, pady = 5)
@@ -190,7 +191,7 @@ def SaveProfiles():
     Profiles["ClickInterval"]["Unit_RandomInterval"] = Unit_RandomInterval.get()
     Profiles["ClickInterval"]["RandomIntervalEnabled"] = RandomIntervalEnabled.get()
     SettingsJSON["Profiles"][Profile.get()] = Profiles
-    json.dump(SettingsJSON, open("./deps/Settings.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
+    json.dump(SettingsJSON, open("./autoclicker/Settings.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
     StatusBar.configure(text = "  Saved " + Profile.get())
 
 def LoadSettings():
@@ -199,7 +200,7 @@ def LoadSettings():
     SettingsWindow.resizable(0, 0)
     SettingsWindow.style = ttk.Style(window)
     SettingsWindow.style.theme_use("vista")
-    SettingsWindow.iconbitmap("./deps/icon.ico")
+    SettingsWindow.iconbitmap("./autoclicker/icon.ico")
 
     Title_SettingsWindow = ttk.Label(SettingsWindow, text = 'Available settings:')
     Title_SettingsWindow.grid(row = 1, column = 1, columnspan = 2, padx = 5, pady = 5, sticky="w")
@@ -220,7 +221,7 @@ def LoadSettings():
     def save():
         for v in list(TempSettings):
             SettingsJSON["Settings"][v] = TempSettings[v].get()
-        json.dump(SettingsJSON, open("./deps/Settings.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
+        json.dump(SettingsJSON, open("./autoclicker/Settings.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
         StatusBar.configure(text = "  Saved settings")
     def cancel():
         SettingsWindow.destroy()
