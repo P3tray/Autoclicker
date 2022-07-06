@@ -38,8 +38,10 @@ If your system doesn't recognise the file type simply choose to open it WITH "py
 
 ## Common python install locations
 Common Python install locations:
-C:\Users\<username>\AppData\Local\Programs\<python-version> -> used for non-admin installs
-C:\Program Files\<python-version> -> used for admin installs
+
+`C:\Users\<username>\AppData\Local\Programs\<python-version>` -> used for non-admin installs
+
+`C:\Program Files\<python-version>` -> used for admin installs
 
 ## Configuration
 Settings and new profiles can be made inside the program, don't forget to click save if you want to keep them, because you guessed it, they won't save.
