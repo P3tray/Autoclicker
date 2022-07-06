@@ -7,7 +7,7 @@ version = "V0.4"
 
 from typing import Literal
 from wsgiref import validate
-import autoclicker
+##import autoclicker
 import autoclicker.keyboard as keyboard
 import autoclicker.mouse as mouse
 import autoclicker.profilemenu as profilemenu
