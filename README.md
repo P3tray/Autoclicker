@@ -38,8 +38,10 @@ If your system doesn't recognise the file type simply choose to open it WITH "py
 
 ## Common python install locations
 Common Python install locations:
-C:\Users\<username>\AppData\Local\Programs\<python-version> -> used for non-admin installs
-C:\Program Files\<python-version> -> used for admin installs
+
+`C:\Users\<username>\AppData\Local\Programs\<python-version>` -> used for non-admin installs
+
+`C:\Program Files\<python-version>` -> used for admin installs
 
 ## Configuration
 Settings and new profiles can be made inside the program, don't forget to click save if you want to keep them, because you guessed it, they won't save.
@@ -47,6 +49,4 @@ Alternatively, you can edit a json file directly, this is currently required for
 Inside "deps" there is "settings.json". This allows you to configure settings which save between sessions without opening the autoclicker.
 
 ## Enjoy!
-This took a reasonble amount of my time, considering I've not used python since my early days as a programmer. I hope the effort payed off.
-
-P.S. I hate python. Stupid syntax. Nothing works like it logically should. Not as bad as Javascript, or worse, Java, but worse than Lua.
+This took a reasonble amount of my time. I've not used python since my early days as a programmer. I hope my effort payed off.
