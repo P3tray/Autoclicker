@@ -9,6 +9,8 @@ dist
 dustbin.py
 tester.py
 README.txt
+Autoclicker
+*.ink
 
 ##################################################
 # Stuff below stolen from our friend Octocat,    #
