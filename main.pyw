@@ -17,6 +17,8 @@ import json
 import random
 from threading import Thread
 from tkinter import ttk
+from deps.ttkwidgets import DebugWindow
+
 
 
 ###################################
@@ -48,13 +50,12 @@ try:
     window.style.theme_use("vista")
 except:
     pass
+
 ################################
 ##  Status bar at the bottom  ##
 ################################
 
 StatusBar = ttk.Label(window, text = '  Autoclicker [' + version + '] MIT ' + str(datetime.date.today().year), relief = "flat")
-##StatusBar.config(background = "gray51", foreground = "white")
-StatusBar.grid(row = 6, column = 1, columnspan = 20, padx = 0, pady = 0, ipadx = 10, ipady = 2, sticky = "w")
 
 #################################
 ##  Variables used by tkinter  ##
@@ -92,8 +93,9 @@ toggle_autoclicker_on_press_key = {}
 Frame_KeybindConfirguration = ttk.LabelFrame(window, text = "Keybinds")
 Frame_KeybindConfirguration.grid(row = 3, column = 1, columnspan = 2, padx = 10, pady = (5, 8))
 
-if Settings["Status Bar"] == False:
-    StatusBar.grid_forget()
+if Settings["Status Bar"] == True:
+    StatusBar.grid(row = 6, column = 1, columnspan = 20, padx = 0, pady = 0, ipadx = 10, ipady = 2, sticky = "w")
+    ##StatusBar.grid_forget()
 
 def UnitsToMath(string):
     ## Yes, I know I can use a table, no, I can't be bothered to.

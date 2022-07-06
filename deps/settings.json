@@ -1,6 +1,7 @@
 {
   "Settings": {
-    "Status Bar": true
+    "Status Bar": true,
+    "Debug Console": true
   }, 
   "Profiles": {
     "Default": {
