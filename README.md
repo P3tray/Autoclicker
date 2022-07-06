@@ -18,7 +18,7 @@ Here's a totally non-biased comparison with my historical go-to solution for spa
 | Click intervals | 🟢 | 🟢
 | Mouse button hold-down intervals | 🟢 | 🔴
 | Randomised click intervals | 🟢 | 🔴
-| The ability to choose which key is pressed | 🔴 | 🟢
+| The ability to choose which mouse button is clicked | 🔴 | 🟢
 | Multiple keybinds | 🟢 | 🔴
 | Toggle and force-stop keysbinds and hotkeys | 🟢 | 🔴
 | Both keybind and hotkey support | 🟢 | 🔴
@@ -27,7 +27,7 @@ Here's a totally non-biased comparison with my historical go-to solution for spa
 | Multiple user-creatable profiles |🟢 | 🔴
 | Mouse speeds so fast they break the sound barrier | 🟢 | 🔴
 | An open source license | 🟢 | 🔴
-| The ability to choose which button gets automatically clicked  | 🔴 | 🟢
+| The ability to choose which button on the mouse gets automatically clicked  | 🔴 | 🟢
 | An idiot proof way to rebind key(s)  | 🔴 | 🟢
 | A cool looking logo | 🟢 | 🔴
 
