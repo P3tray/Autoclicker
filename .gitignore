@@ -11,6 +11,7 @@ tester.py
 README.txt
 Autoclicker
 *.ink
+*.py[cod]
 
 ##################################################
 # Stuff below stolen from our friend Octocat,    #

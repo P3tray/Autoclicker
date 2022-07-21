@@ -1,0 +1,45 @@
+{
+  "Default": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "10", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "20", 
+        "Units": "Milliseconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "30", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "Keybinds": {
+      "key_press": {
+        "toggle": [
+          "q"
+        ], 
+        "on": [], 
+        "off": [
+          "#"
+        ], 
+        "open": []
+      }, 
+      "hotkey": {
+        "toggle": [
+          "q"
+        ], 
+        "on": [], 
+        "off": [
+          "alt+tab"
+        ], 
+        "open": [
+          "]"
+        ]
+      }
+    }
+  }
+}
