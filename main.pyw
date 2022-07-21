@@ -77,7 +77,7 @@ RandomIntervalEnabled = tk.BooleanVar()
 ##  Load Settings.json and profile  ##
 ######################################
 
-SettingsJSON = json.load(open("./autoclicker/Settings.json", "r"))
+SettingsJSON = json.load(open("./autoclicker/settings.json", "r"))
 Profile.set(list(SettingsJSON["Profiles"])[0])
 Profiles = SettingsJSON["Profiles"][Profile.get()]
 Settings = SettingsJSON["Settings"]
