@@ -1,4 +1,6 @@
-# ![Project icon](/deps/logo_text.png?raw=true "Project icon")
+# I am working on Version 2.0 of the project. Please excuse the repositories state, and instead download from the releases tab.
+
+# ![Project icon](/autoclicker/logo_text.png?raw=true "Project icon")
 <p align="center">
   <a href="#about">About</a> •
   <a href="#running-from-source">Running from source</a> •
