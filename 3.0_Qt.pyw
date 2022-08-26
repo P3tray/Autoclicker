@@ -1,11 +1,15 @@
 ## Qt
+import profile
 import re
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QApplication, QComboBox, QCheckBox, 
                                 QDialog, QGroupBox, QHBoxLayout, 
                                 QLabel, QLineEdit, QPushButton, 
                                 QVBoxLayout, QWidget, QTabWidget,
-                                QGridLayout, QFrame)
+                                QGridLayout, QFrame, QListWidget,
+                                QMenu, QAbstractItemView)
+from PySide6.QtGui import (QContextMenuEvent, QAction)
+
 ##>> Standard Python libraries. Do not need to bundle with the source code.
 import sys
 import site
@@ -285,6 +289,11 @@ class __Bind__(QDialog):
     def GetResult(self):
         return ("+".join(self.bind))
 
+class __ContextMenu__(QContextMenuEvent):
+    def __init__(self, event):
+        menu = QMenu()
+        menu.addAction('hello')
+
 class Window(QDialog):
     def __init__(self):
         super().__init__()
@@ -321,11 +330,24 @@ class Window(QDialog):
             tabs.addTab(frame, tabName)
 
         frame = QFrame()
-        # frame.setLayout(tabLayout)
+        frame.setLayout(self.ManageProfilesFrame())
         tabs.addTab(frame, "Manage Profiles...")
 
         tabsLayout.addWidget(tabs)
         return tabsLayout
+
+    def ManageProfilesFrame(self):
+        layout = QVBoxLayout()
+        profilesList = QListWidget()
+        profilesList.addItems(list(util.search(self.Profiles, '*').keys()))
+        profilesList.setDragDropMode(QAbstractItemView.InternalMove)
+        profilesList.setDefaultDropAction(Qt.TargetMoveAction)
+        profilesList.setContextMenuPolicy(Qt.ActionsContextMenu)
+        profilesList.addAction("Hello")
+        profilesList.addAction("test2")
+        # profilesList.contextMenuEvent(__ContextMenu__, event)
+        layout.addWidget(profilesList)
+        return layout
 
     def ClickConfigFrame(self, profile):
         vertical = QVBoxLayout()
