@@ -2,42 +2,495 @@
   "Default": {
     "ClickConfig": {
       "Click Interval": {
-        "Value": "10", 
+        "Value": "15", 
         "Units": "Milliseconds", 
         "Enabled": null
       }, 
       "Hold Interval": {
-        "Value": "20", 
-        "Units": "Milliseconds", 
+        "Value": "25", 
+        "Units": "Seconds", 
         "Enabled": true
       }, 
       "Random Interval": {
-        "Value": "30", 
+        "Value": "35", 
         "Units": "Hours", 
         "Enabled": false
       }
     }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
     "Keybinds": {
-      "key_press": {
-        "toggle": [
-          "q"
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
         ], 
-        "on": [], 
-        "off": [
-          "#"
+        "On": [
+          "4", 
+          null
         ], 
-        "open": []
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
       }, 
-      "hotkey": {
-        "toggle": [
-          "q"
+      "Hotkeys": {
+        "Toggle": [
+          null
         ], 
-        "on": [], 
-        "off": [
-          "alt+tab"
+        "On": [
+          null
         ], 
-        "open": [
-          "]"
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "1": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "2": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "3": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "4": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "5": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "6": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
+        ]
+      }
+    }
+  },
+  "7": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "17", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "35", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "05", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          null, 
+          "2+3", 
+          "2+1+3", 
+          null
+        ], 
+        "On": [
+          "4", 
+          null
+        ], 
+        "Open": [
+          null, 
+          null
+        ], 
+        "Off": [
+          "#", 
+          null
+        ]
+      }, 
+      "Hotkeys": {
+        "Toggle": [
+          null
+        ], 
+        "On": [
+          null
+        ], 
+        "Open": [
+          "alt+]", 
+          null
+        ], 
+        "Off": [
+          "alt+tab", 
+          null
         ]
       }
     }
