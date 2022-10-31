@@ -1,6 +1,5 @@
 ## Qt
 import profile
-import re
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QApplication, QComboBox, QCheckBox, 
                                 QDialog, QGroupBox, QHBoxLayout, 
@@ -12,6 +11,7 @@ from PySide6.QtGui import (QContextMenuEvent, QAction)
 
 ##>> Standard Python libraries. Do not need to bundle with the source code.
 import sys
+import os
 import site
 import time
 import json
@@ -294,6 +294,34 @@ class __ContextMenu__(QContextMenuEvent):
         menu = QMenu()
         menu.addAction('hello')
 
+class __Name__(QDialog):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setAttribute(Qt.WA_DeleteOnClose)
+
+        self.nameLayout = QGridLayout()
+        self.UI()
+        self.setLayout(self.nameLayout)
+        self.setWindowTitle("Name")
+
+    def UI(self):
+        
+        self.nameLabel = QLabel("Please give a name...")
+        self.nameLabel.setAlignment(Qt.AlignHCenter)
+        self.name = QLineEdit()
+        self.save = QPushButton(f"Save")
+        self.nameLayout.addWidget(self.nameLabel,   1, 1, 1, 3)
+        self.nameLayout.addWidget(self.name,        2, 1, 1, 2)
+        self.nameLayout.addWidget(self.save,        2, 2, 1, 1)
+        self.save.clicked.connect(self.Save)
+
+    def Save(self):
+        self.result = self.name.text()
+        self.done(0)
+    def GetResult(self):
+        return self.result
+        
+
 class Window(QDialog):
     def __init__(self):
         super().__init__()
@@ -305,10 +333,18 @@ class Window(QDialog):
         self.setWindowTitle("Autoclicker")
 
     def Save(self):
-        x = json.dump(self.Profiles, open("./deps/profiles.json", "w+"), indent = 2, separators = (', ', ': '))
-        print("SAVED")
-        print(x)
-        print("FIN")
+        newJson = {}
+        for x in range(self.profilesList.count()):
+            i = self.profilesList.item(x).text()
+            print(i)
+            newJson[i] = self.Profiles[i]
+        print(newJson)
+        order = {self.profilesList.item(x).text() for x in range(self.profilesList.count())}
+        # print(order)
+        x = json.dump(newJson, open("./deps/profiles.json", "w+"), indent = 2, separators = (', ', ': '))
+        print("Saving self.Profiles to profiles.json")
+        # print(x)
+        print("Successfully completed in saving self.Profiles to profiles.json")
 
     def ProfilesTabs(self):
         tabsLayout = QVBoxLayout()
@@ -319,9 +355,6 @@ class Window(QDialog):
             frame = QFrame()
             tabLayout = QVBoxLayout()
             topbar = QHBoxLayout()
-            save = QPushButton(f"Save")
-            save.clicked.connect(self.Save)
-            topbar.addWidget(save)
             tabLayout.addLayout(topbar)
             tabLayout.addWidget(self.ClickConfigFrame(tabName))
             tabLayout.addWidget(self.KeybindsFrame(tabName))
@@ -333,20 +366,83 @@ class Window(QDialog):
         frame.setLayout(self.ManageProfilesFrame())
         tabs.addTab(frame, "Manage Profiles...")
 
+        save = QPushButton(f"Save all changes")
+        save.clicked.connect(self.Save)
+        tabsLayout.addWidget(save)
         tabsLayout.addWidget(tabs)
         return tabsLayout
+    
+    def ProfilesContextMenu(self, pos):
+        if self.profilesList.count() == 0:
+            return
+        menu = QMenu(self)
+        newProfileAction = menu.addAction("New profile...")
+        renameProfileAction = menu.addAction("Rename profile...")
+        deleteProfileAction = menu.addAction("Delete profile...")
+        chosen_action = menu.exec(self.profilesList.viewport().mapToGlobal(pos))
+        current_item = self.profilesList.currentItem()
 
+        # text = current_item.text()
+        # index = text.find(' ')
+        # if index == -1:
+        #     return
+
+        if chosen_action == newProfileAction:
+            print("New")
+            name = __Name__(self)
+            result = name.exec()
+            if result == 0:
+                newName = name.GetResult() or " "
+                newProfileJSON = util.search(self.Profiles, current_item.text())
+                print(newProfileJSON)
+                self.Profiles[newName] = newProfileJSON.pop(current_item.text())
+                print(self.Profiles)
+                x = self.profilesList.insertItem(self.profilesList.row(current_item) + 1, newName)
+        elif chosen_action == renameProfileAction:
+            print("Rename")
+            name = __Name__(self)
+            result = name.exec()
+            if result == 0:
+                newName = name.GetResult() or " "
+                self.Profiles[newName] = self.Profiles[current_item.text()]
+                self.Profiles.pop(current_item.text())
+                current_item.setText(newName)
+        elif chosen_action == deleteProfileAction:
+            print("Deleted")
+            self.Profiles.pop(current_item.text())
+            self.profilesList.takeItem(self.profilesList.row(current_item))
+            self.profilesList.removeItemWidget(current_item)
+
+    
     def ManageProfilesFrame(self):
-        layout = QVBoxLayout()
-        profilesList = QListWidget()
-        profilesList.addItems(list(util.search(self.Profiles, '*').keys()))
-        profilesList.setDragDropMode(QAbstractItemView.InternalMove)
-        profilesList.setDefaultDropAction(Qt.TargetMoveAction)
-        profilesList.setContextMenuPolicy(Qt.ActionsContextMenu)
-        profilesList.addAction("Hello")
-        profilesList.addAction("test2")
+        layout = QGridLayout()
+        self.profilesList = QListWidget()
+        self.profilesList.addItems(list(util.search(self.Profiles, '*').keys()))
+        self.profilesList.setDragDropMode(QAbstractItemView.InternalMove)
+        self.profilesList.setDefaultDropAction(Qt.TargetMoveAction)
+        ##profilesList.setContextMenuPolicy(Qt.ActionsContextMenu)
+        self.profilesList.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.profilesList.customContextMenuRequested.connect(self.ProfilesContextMenu)
+        # rename = profilesList.addAction("Rename...")
+        # delete = profilesList.addAction("Delete...")
+
+        # rename.triggered.connect(lambda: print("I have not written the code to rename yet!"))
+        
+        restartLabel = QLabel("You must save, close and re-open to display changes!")
+        layout.addWidget(restartLabel,      1, 1, 1, 1)
+        layout.addWidget(self.profilesList, 2, 1, 1, 1)
+        # restartButton = QPushButton("Restart")
+        # print("========================")
+        # print(sys.executable, ['python'] + sys.argv)
+        # print("========================")
+        # def Restart():
+            
+        #     sys.stdout.flush()
+        #     os.execl(sys.executable, sys.executable, *sys.argv)
+        # restartButton.clicked.connect(Restart) 
+        # layout.addWidget(restartButton)
         # profilesList.contextMenuEvent(__ContextMenu__, event)
-        layout.addWidget(profilesList)
+        
         return layout
 
     def ClickConfigFrame(self, profile):
