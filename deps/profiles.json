@@ -25,11 +25,47 @@
     "Keybinds": {
       "Key presses": {
         "Toggle": [
-          null, 
-          null, 
-          null, 
-          null, 
-          null
+          "q"
+        ], 
+        "On": [], 
+        "Open": [], 
+        "Off": []
+      }, 
+      "Hotkeys": {
+        "Toggle": [], 
+        "On": [], 
+        "Open": [], 
+        "Off": []
+      }
+    }
+  }, 
+  "TestProfile": {
+    "ClickConfig": {
+      "Click Interval": {
+        "Value": "100", 
+        "Units": "Milliseconds", 
+        "Enabled": null
+      }, 
+      "Hold Interval": {
+        "Value": "50", 
+        "Units": "Seconds", 
+        "Enabled": true
+      }, 
+      "Random Interval": {
+        "Value": "10", 
+        "Units": "Hours", 
+        "Enabled": false
+      }
+    }, 
+    "ButtonsConfig": {
+      "MB1": true, 
+      "MB2": false, 
+      "MB3": false
+    }, 
+    "Keybinds": {
+      "Key presses": {
+        "Toggle": [
+          "q"
         ], 
         "On": [], 
         "Open": [], 

@@ -1,4 +1,4 @@
-## Qt
+##>> Qt
 import profile
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QApplication, QComboBox, QCheckBox, 
@@ -69,128 +69,7 @@ class __Autoclicker__:
         else:
             self.On()
 
-class __Profiles__:
-    def __init__(self):
-        self.Default = {
-            "ClickInterval": {
-                "SleepInterval": {
-                    "Value": 10,
-                    "Units": "Milliseconds",
-                    "Enabled": True
-                },
-                "HoldInterval": {
-                    "Value": 20,
-                    "Units": "Milliseconds",
-                    "Enabled": True
-                },
-                "RandomInterval": {
-                    "Value": 30,
-                    "Units": "Milliseconds",
-                    "Enabled": True
-                }
-            },
-            "ButtonsConfig": {
-                "MB1": True, 
-                "MB2": False, 
-                "MB3": False
-            }, 
-            "Keybinds": {
-                "key_press": {
-                    "toggle": ["F6"],
-                    "on": [],
-                    "off": [],
-                    "open": []
-                },
-                "hotkey": {
-                    "toggle": [],
-                    "on": [],
-                    "off": ["alt+tab", "esc", "ctrl+alt+del"],
-                    "open": []
-                }
-            }
-        }
-        self.Profiles = None ## TODO PLS
-        profile = self.Default
-        self.Load()
-
-    def Load(self):
-        self.Profiles = json.load(open("./deps/profiles.json", "r"))
-        self.SwitchProfile(None)
-    def Save(self):
-        # print(self.Profiles)
-        ##print(f"Saving {json.dumps(self.Profiles[profile], indent=4)}")
-        json.dump(self.Profiles, open("./deps/profiles.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
-
-    def PerformClickConfigOverwrite(self, ConfigClass, name, value):
-        self.Profiles[profile]["ClickConfig"][ConfigClass][name] = value
-
-    def PerformButtonsConfigOverwrite(self, name, value):
-        ##print(name, value)
-        self.Profiles[profile]["ButtonsConfig"][name] = value
-        # print(self.Profiles[profile])
-
-    def SwitchProfile(self, Profile):
-        profile = (Profile and (self.Profiles[Profile] and Profile) or (self.Profiles["Default"] and "Default")) or 0
-
-    def PassDownArray(self, dict, array, v):
-        # print(dict,array,v)
-        d = dict[array[0]]
-        # print(len(array), d)
-        newarr = array
-        ard = array
-        newarr.pop(0)
-        # print(len(newarr), len(ard))
-        if len(newarr) == 0:
-            d = v
-        else:
-            d = self.PassDownArray(d, newarr, v)
-            dict[array[0]] = d
-        return d           
-    
-    def PathToArray(self, path):
-        pathArray = path.split("/")
-        monolithic = self.Profiles[profile]
-        for value in pathArray:
-            if len(value) > 0:
-                monolithic = monolithic[value]
-        return monolithic
-
-    def GetDescendants(self, path):
-        path = path or ""
-        parent = self.ConvertPath(path)
-        root = []
-        for index, value in parent.items():        
-            if isinstance(value, dict):
-                for directory in self.Iterate(path + "/" + index):
-                    root.append(directory)
-            # else:            
-                # print (path + "/" + index,": ",value)
-        return root
-
-    def GetChildren(self, path):
-        path = path or ""
-        parent = self.PathToArray(path)
-        children = {}
-        for index, value in parent.items():
-            # print (path + "/" + index,": ",value)
-            children[index] = value
-        return children
-
-class __Settings__:
-    def __init__(self):
-        self.Settings = None
-        self.Load()
-
-    def Load(self):
-        self.Settings = json.load(open("./deps/settings.json", "r"))
-    def Save(self):
-        # print(f"Saving {self.Profiles[profile]['ClickConfig']}")
-        json.dump(self.Profiles, open("./deps/profiles.json", "w+"), indent = 2, separators = (', ', ': ')) ## Convert dictionary to JSON string, beautify, and write to file.
-
-    def UpdateSettings(self, ConfigClass, name, value):
-        self.Profiles[profile]["ClickConfig"][ConfigClass][name] = value
-
-lmao = __Autoclicker__()
+# lmao = __Autoclicker__()
 ##lmao.CreateThread()
 ##time.sleep(1)
 ##lmao.Off()
@@ -199,41 +78,13 @@ lmao = __Autoclicker__()
 ##lmao.CreateThread()
 ##time.sleep(0.5)
 
-##>>  The Qt Window class.
-
-# class __Advanced__(QWidget):
-#     def __init__(self, parent):
-#         super().__init__(parent)
-#         self.advanced_layout = QVBoxLayout()
-#         self.ButtonsConfig()
-#         self.advanced_layout.addWidget(self._ButtonsConfig)
-#         self.setLayout(self.advanced_layout)
-#         self.setWindowTitle("Basic Layouts")
-
-#     def ButtonsConfig(self):
-#         self._ButtonsConfig = QGroupBox("Buttons configuration")
-#         horizontal = QHBoxLayout()
-#         for name, value in self.profiles.GetChildren("/ButtonsConfig").items():
-#             horizontal.addWidget(QLabel(name))
-#             path = f"/ButtonsConfig/{name}"
-#             # print(f"Variable {path} Value {value} Type {type(value)}")
-#             widget = QCheckBox()
-#             state = Qt.CheckState.Unchecked
-#             if value is None:
-#                 widget.setEnabled(False)
-#                 state = Qt.CheckState.Checked
-#                 value = 2
-#             elif value:
-#                 value = 2
-#                 state = Qt.CheckState.Checked
-#             else:
-#                 value = 0
-                
-#             widget.setCheckState(state)
-#             widget.stateChanged.connect(lambda v, name=name: util.new(self.Profiles, f'{profile}/ButtonsConfig/{name}', v==2))
-#             ##self.Profiles[profile]["ButtonsConfig"][name] = a)##self.profiles.PerformButtonsConfigOverwrite(name, v==2)) ##self.Profiles[profile]["ButtonsConfig"][name] = v==2
-#             horizontal.addWidget(widget)
-#         self._ButtonsConfig.setLayout(horizontal)
+class __KeyboardHandler__(QDialog):
+    def __init__(self, parent):
+        super().__init__(parent)
+        # PySide6.QtWidgets.QTabWidget.currentChanged(index)
+        # PySide6.QtWidgets.QTabWidget.currentIndex()
+        # PySide6.QtWidgets.QTabWidget.tabText(index)
+        # keyboard.add_hotkey(v, lambda: toggle_autoclicker()
 
 class __Bind__(QDialog):
     def __init__(self, parent):
@@ -289,11 +140,6 @@ class __Bind__(QDialog):
     def GetResult(self):
         return ("+".join(self.bind))
 
-class __ContextMenu__(QContextMenuEvent):
-    def __init__(self, event):
-        menu = QMenu()
-        menu.addAction('hello')
-
 class __Name__(QDialog):
     def __init__(self, parent):
         super().__init__(parent)
@@ -319,8 +165,7 @@ class __Name__(QDialog):
         self.result = self.name.text()
         self.done(0)
     def GetResult(self):
-        return self.result
-        
+        return self.result    
 
 class Window(QDialog):
     def __init__(self):
@@ -336,22 +181,16 @@ class Window(QDialog):
         newJson = {}
         for x in range(self.profilesList.count()):
             i = self.profilesList.item(x).text()
-            print(i)
             newJson[i] = self.Profiles[i]
-        print(newJson)
-        order = {self.profilesList.item(x).text() for x in range(self.profilesList.count())}
-        # print(order)
-        x = json.dump(newJson, open("./deps/profiles.json", "w+"), indent = 2, separators = (', ', ': '))
         print("Saving self.Profiles to profiles.json")
-        # print(x)
+        x = json.dump(newJson, open("./deps/profiles.json", "w+"), indent = 2, separators = (', ', ': '))
         print("Successfully completed in saving self.Profiles to profiles.json")
 
     def ProfilesTabs(self):
         tabsLayout = QVBoxLayout()
-        tabs = QTabWidget()
+        self.tabs = QTabWidget()
         listOfProfiles = list(util.search(self.Profiles, '*').keys())
         for tabName in listOfProfiles:
-            ##print(tabName)
             frame = QFrame()
             tabLayout = QVBoxLayout()
             topbar = QHBoxLayout()
@@ -360,16 +199,18 @@ class Window(QDialog):
             tabLayout.addWidget(self.KeybindsFrame(tabName))
             self.setLayout(tabLayout)
             frame.setLayout(tabLayout)
-            tabs.addTab(frame, tabName)
+            self.tabs.addTab(frame, tabName)
 
         frame = QFrame()
         frame.setLayout(self.ManageProfilesFrame())
-        tabs.addTab(frame, "Manage Profiles...")
+        self.tabs.addTab(frame, "Manage Profiles...")
 
         save = QPushButton(f"Save all changes")
         save.clicked.connect(self.Save)
         tabsLayout.addWidget(save)
-        tabsLayout.addWidget(tabs)
+        tabsLayout.addWidget(self.tabs)
+        self.tabs.currentChanged.connect(self.BindAll)
+        self.BindAll()
         return tabsLayout
     
     def ProfilesContextMenu(self, pos):
@@ -381,11 +222,7 @@ class Window(QDialog):
         deleteProfileAction = menu.addAction("Delete profile...")
         chosen_action = menu.exec(self.profilesList.viewport().mapToGlobal(pos))
         current_item = self.profilesList.currentItem()
-
-        # text = current_item.text()
-        # index = text.find(' ')
-        # if index == -1:
-        #     return
+        self.UnbindAll()
 
         if chosen_action == newProfileAction:
             print("New")
@@ -412,7 +249,7 @@ class Window(QDialog):
             self.Profiles.pop(current_item.text())
             self.profilesList.takeItem(self.profilesList.row(current_item))
             self.profilesList.removeItemWidget(current_item)
-
+        self.BindAll()
     
     def ManageProfilesFrame(self):
         layout = QGridLayout()
@@ -420,45 +257,26 @@ class Window(QDialog):
         self.profilesList.addItems(list(util.search(self.Profiles, '*').keys()))
         self.profilesList.setDragDropMode(QAbstractItemView.InternalMove)
         self.profilesList.setDefaultDropAction(Qt.TargetMoveAction)
-        ##profilesList.setContextMenuPolicy(Qt.ActionsContextMenu)
         self.profilesList.setContextMenuPolicy(Qt.CustomContextMenu)
         self.profilesList.customContextMenuRequested.connect(self.ProfilesContextMenu)
-        # rename = profilesList.addAction("Rename...")
-        # delete = profilesList.addAction("Delete...")
-
-        # rename.triggered.connect(lambda: print("I have not written the code to rename yet!"))
         
         restartLabel = QLabel("You must save, close and re-open to display changes!")
         layout.addWidget(restartLabel,      1, 1, 1, 1)
         layout.addWidget(self.profilesList, 2, 1, 1, 1)
-        # restartButton = QPushButton("Restart")
-        # print("========================")
-        # print(sys.executable, ['python'] + sys.argv)
-        # print("========================")
-        # def Restart():
-            
-        #     sys.stdout.flush()
-        #     os.execl(sys.executable, sys.executable, *sys.argv)
-        # restartButton.clicked.connect(Restart) 
-        # layout.addWidget(restartButton)
-        # profilesList.contextMenuEvent(__ContextMenu__, event)
         
         return layout
 
     def ClickConfigFrame(self, profile):
         vertical = QVBoxLayout()
-        # print(util.values(self.Profiles, f'{profile}/ClickConfig'))
         for ConfigClass in util.values(self.Profiles, f'{profile}/ClickConfig')[0].keys():
             horizontal = QHBoxLayout()
             horizontal.addWidget(QLabel(ConfigClass))
-            # print(util.values(self.Profiles, f'{profile}/ClickConfig/{ConfigClass}'))
             for ConfigOption in util.values(self.Profiles, f'{profile}/ClickConfig/{ConfigClass}')[0]:
                 value = util.values(self.Profiles, f'{profile}/ClickConfig/{ConfigClass}/{ConfigOption}')[0]
                 match ConfigOption:
                     case "Value":
                         widget = QLineEdit()
                         widget.setText(value)
-                        # print(ConfigClass, name, value)
                         widget.textChanged.connect(lambda v, ConfigClass=ConfigClass, name=ConfigOption: util.set(self.Profiles, f'{profile}/ClickConfig/{ConfigClass}/{name}', v))##self.profiles.PerformClickConfigOverwrite(ConfigClass, name, v))
                     case "Units":
                         widget = QComboBox()
@@ -522,6 +340,7 @@ class Window(QDialog):
         bind = bindButton.text()
         if bind == "New...":
             bind = None
+        self.UnbindAll()
         binder = __Bind__(self)
         result = binder.exec()
 
@@ -538,16 +357,27 @@ class Window(QDialog):
                 bindButton.deleteLater()
         else:
             assert("Invalid BindHandler code")
+        self.BindAll()
 
-        print(json.dumps(self.Profiles, indent=4, sort_keys=True))
-        # print(self.layout())
-        # # self.WipeWidget(self.layout())
-        # self.layout().deleteLater()
-        # self.setLayout(QGridLayout())
-        # print(self.layout())
-        # print("PERFORING reload")
-        # # self.setLayout(self.ProfilesTabs())   
-        # print("reloadlded")
+        # PySide6.QtWidgets.QTabWidget.currentChanged(index)
+        # PySide6.QtWidgets.QTabWidget.currentIndex()
+        # PySide6.QtWidgets.QTabWidget.tabText(index)
+        # keyboard.add_hotkey(v, lambda: toggle_autoclicker()
+
+    def BindAll(self):
+        self.UnbindAll()
+        profile = self.tabs.tabText(self.tabs.currentIndex())
+        for tabName in util.values(self.Profiles, f'{profile}/Keybinds')[0].keys():
+            i = 0
+            for group in util.values(self.Profiles, f'{profile}/Keybinds/{tabName}')[0].keys():
+                i += 1
+                for bind in util.values(self.Profiles, f'{profile}/Keybinds/{tabName}/{group}')[0]:
+                    if bind:
+                        print(bind)
+                        keyboard.add_hotkey(bind, lambda: self.autoclicker.Toggle())
+
+    def UnbindAll(self):
+        keyboard.unhook_all()
     
     def WipeWidget(self, layout):
         while layout.count():
@@ -564,4 +394,3 @@ app = QApplication(sys.argv)
 window = Window()
 window.show()
 app.exec()
-##sys.exit(window.exec())
